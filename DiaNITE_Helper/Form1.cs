@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
+using System.Data;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -29,6 +31,9 @@ namespace DiaNITE_Helper
             _gb_add_in.Size = new Size(598, 481);
             _gb_add_new.Size = new Size(598, 481);
             _gb_sub.Size = new Size(598, 481);
+
+            
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -79,6 +84,19 @@ namespace DiaNITE_Helper
             _gb_add_in.Visible = false;
             _gb_add_new.Visible = false;
             _gb_sub.Visible = false;
+
+            _db_Main db = new _db_Main();
+            DataTable table = new DataTable();
+
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand("SELECT * FROM '_tb_stuff'");
+            
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+
+            _cb_nameSuff.DataSource = table;
+            _cb_nameSuff.DisplayMember = "nameStuff";
         }
 
         private void _bt_addnewpos_Click(object sender, EventArgs e)

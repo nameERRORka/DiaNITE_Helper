@@ -41,20 +41,20 @@ namespace DiaNITE_Helper
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._gb_info = new System.Windows.Forms.GroupBox();
+            this._list_dateSub = new System.Windows.Forms.ListBox();
+            this._lb_sum_stuff = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this._lb_sub_stuff = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this._lb_buy_stuff = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this._cb_nameSuff = new System.Windows.Forms.ComboBox();
             this._gb_sub = new System.Windows.Forms.GroupBox();
             this._gb_add_new = new System.Windows.Forms.GroupBox();
             this._gb_add_in = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this._lb_buy_stuff = new System.Windows.Forms.Label();
-            this._lb_sub_stuff = new System.Windows.Forms.Label();
-            this._lb_sum_stuff = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this._list_dateSub = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this._gb_info.SuspendLayout();
@@ -190,7 +190,7 @@ namespace DiaNITE_Helper
             this._gb_info.Controls.Add(this._lb_buy_stuff);
             this._gb_info.Controls.Add(this.label6);
             this._gb_info.Controls.Add(this.label5);
-            this._gb_info.Controls.Add(this.comboBox1);
+            this._gb_info.Controls.Add(this._cb_nameSuff);
             this._gb_info.Font = new System.Drawing.Font("Segoe UI Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._gb_info.Location = new System.Drawing.Point(264, 12);
             this._gb_info.Name = "_gb_info";
@@ -199,6 +199,98 @@ namespace DiaNITE_Helper
             this._gb_info.TabStop = false;
             this._gb_info.Text = "INFO";
             this._gb_info.Visible = false;
+            // 
+            // _list_dateSub
+            // 
+            this._list_dateSub.FormattingEnabled = true;
+            this._list_dateSub.ItemHeight = 21;
+            this._list_dateSub.Location = new System.Drawing.Point(218, 238);
+            this._list_dateSub.Name = "_list_dateSub";
+            this._list_dateSub.Size = new System.Drawing.Size(169, 235);
+            this._list_dateSub.TabIndex = 2;
+            // 
+            // _lb_sum_stuff
+            // 
+            this._lb_sum_stuff.AutoSize = true;
+            this._lb_sum_stuff.Location = new System.Drawing.Point(214, 203);
+            this._lb_sum_stuff.Name = "_lb_sum_stuff";
+            this._lb_sum_stuff.Size = new System.Drawing.Size(45, 21);
+            this._lb_sum_stuff.TabIndex = 1;
+            this._lb_sum_stuff.Text = "NULL";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(50, 238);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(158, 21);
+            this.label9.TabIndex = 1;
+            this.label9.Text = "Даты убытка товара :";
+            this.label9.Click += new System.EventHandler(this.label9_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(22, 203);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(186, 21);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "Итоговое кол-во товара :";
+            // 
+            // _lb_sub_stuff
+            // 
+            this._lb_sub_stuff.AutoSize = true;
+            this._lb_sub_stuff.Location = new System.Drawing.Point(214, 182);
+            this._lb_sub_stuff.Name = "_lb_sub_stuff";
+            this._lb_sub_stuff.Size = new System.Drawing.Size(45, 21);
+            this._lb_sub_stuff.TabIndex = 1;
+            this._lb_sub_stuff.Text = "NULL";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(90, 182);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(118, 21);
+            this.label7.TabIndex = 1;
+            this.label7.Text = "Расход товара :";
+            // 
+            // _lb_buy_stuff
+            // 
+            this._lb_buy_stuff.AutoSize = true;
+            this._lb_buy_stuff.Location = new System.Drawing.Point(214, 161);
+            this._lb_buy_stuff.Name = "_lb_buy_stuff";
+            this._lb_buy_stuff.Size = new System.Drawing.Size(45, 21);
+            this._lb_buy_stuff.TabIndex = 1;
+            this._lb_buy_stuff.Text = "NULL";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(64, 161);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(144, 21);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Закуплено товара :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 45);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(176, 21);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Наименование товара :";
+            // 
+            // _cb_nameSuff
+            // 
+            this._cb_nameSuff.FormattingEnabled = true;
+            this._cb_nameSuff.Items.AddRange(new object[] {
+            "NULL"});
+            this._cb_nameSuff.Location = new System.Drawing.Point(10, 69);
+            this._cb_nameSuff.Name = "_cb_nameSuff";
+            this._cb_nameSuff.Size = new System.Drawing.Size(582, 29);
+            this._cb_nameSuff.TabIndex = 0;
             // 
             // _gb_sub
             // 
@@ -243,98 +335,6 @@ namespace DiaNITE_Helper
             this.label4.TabIndex = 4;
             this.label4.Text = "Copyright © ForgeFuckTeam 2022 ";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "NULL"});
-            this.comboBox1.Location = new System.Drawing.Point(10, 69);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(582, 29);
-            this.comboBox1.TabIndex = 0;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 45);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(176, 21);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Наименование товара :";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(64, 161);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(144, 21);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Закуплено товара :";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(90, 182);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(118, 21);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "Расход товара :";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(22, 203);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(186, 21);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "Итоговое кол-во товара :";
-            // 
-            // _lb_buy_stuff
-            // 
-            this._lb_buy_stuff.AutoSize = true;
-            this._lb_buy_stuff.Location = new System.Drawing.Point(214, 161);
-            this._lb_buy_stuff.Name = "_lb_buy_stuff";
-            this._lb_buy_stuff.Size = new System.Drawing.Size(45, 21);
-            this._lb_buy_stuff.TabIndex = 1;
-            this._lb_buy_stuff.Text = "NULL";
-            // 
-            // _lb_sub_stuff
-            // 
-            this._lb_sub_stuff.AutoSize = true;
-            this._lb_sub_stuff.Location = new System.Drawing.Point(214, 182);
-            this._lb_sub_stuff.Name = "_lb_sub_stuff";
-            this._lb_sub_stuff.Size = new System.Drawing.Size(45, 21);
-            this._lb_sub_stuff.TabIndex = 1;
-            this._lb_sub_stuff.Text = "NULL";
-            // 
-            // _lb_sum_stuff
-            // 
-            this._lb_sum_stuff.AutoSize = true;
-            this._lb_sum_stuff.Location = new System.Drawing.Point(214, 203);
-            this._lb_sum_stuff.Name = "_lb_sum_stuff";
-            this._lb_sum_stuff.Size = new System.Drawing.Size(45, 21);
-            this._lb_sum_stuff.TabIndex = 1;
-            this._lb_sum_stuff.Text = "NULL";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(50, 238);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(158, 21);
-            this.label9.TabIndex = 1;
-            this.label9.Text = "Даты убытка товара :";
-            this.label9.Click += new System.EventHandler(this.label9_Click);
-            // 
-            // _list_dateSub
-            // 
-            this._list_dateSub.FormattingEnabled = true;
-            this._list_dateSub.ItemHeight = 21;
-            this._list_dateSub.Location = new System.Drawing.Point(218, 238);
-            this._list_dateSub.Name = "_list_dateSub";
-            this._list_dateSub.Size = new System.Drawing.Size(169, 235);
-            this._list_dateSub.TabIndex = 2;
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -378,7 +378,7 @@ namespace DiaNITE_Helper
         private System.Windows.Forms.GroupBox _gb_add_in;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox _cb_nameSuff;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
