@@ -71,9 +71,9 @@ namespace DiaNITE_Helper
             this.label17 = new System.Windows.Forms.Label();
             this._tb_addGB = new System.Windows.Forms.TextBox();
             this._cb_addGb = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this._gb_info.SuspendLayout();
@@ -106,11 +106,12 @@ namespace DiaNITE_Helper
             // 
             this.label3.AutoSize = true;
             this.label3.ForeColor = System.Drawing.SystemColors.ControlDark;
-            this.label3.Location = new System.Drawing.Point(147, 371);
+            this.label3.Location = new System.Drawing.Point(183, 371);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(118, 13);
+            this.label3.Size = new System.Drawing.Size(82, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Made by FCORE_Code";
+            this.label3.Text = "Made by FCode";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // _bt_add
             // 
@@ -513,6 +514,15 @@ namespace DiaNITE_Helper
             this._cb_addGb.TabIndex = 0;
             this._cb_addGb.SelectedIndexChanged += new System.EventHandler(this._cb_nameSuff_SelectedIndexChanged);
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(239, 161);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(28, 21);
+            this.label19.TabIndex = 2;
+            this.label19.Text = "гр.";
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -531,15 +541,6 @@ namespace DiaNITE_Helper
             this.label4.Size = new System.Drawing.Size(174, 13);
             this.label4.TabIndex = 4;
             this.label4.Text = "Copyright © ForgeFuckTeam 2022 ";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(239, 161);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(28, 21);
-            this.label19.TabIndex = 2;
-            this.label19.Text = "гр.";
             // 
             // MainWindow
             // 

@@ -10,6 +10,7 @@ namespace DiaNITE_Helper
     class _db_Main
     {
         MySqlConnection connection = new MySqlConnection("server=localhost;port=3307;username=root;password=root;database=_db_dianite");
+        MySqlConnection connectionNonDB = new MySqlConnection("server=localhost;port=3307;username=root;password=root");
 
         public void openConnection()
         {
@@ -18,7 +19,9 @@ namespace DiaNITE_Helper
                 connection.Open();
             }
         }
-        public void closeConnection()
+
+       
+        public void closeConnectionNonDB()
         {
             if (connection.State == System.Data.ConnectionState.Open)
             {
@@ -29,6 +32,26 @@ namespace DiaNITE_Helper
         public MySqlConnection getConnection()
         {
             return connection;
+        }
+        public void openConnectionNonDB()
+        {
+            if (connection.State == System.Data.ConnectionState.Closed)
+            {
+                connectionNonDB.Open();
+            }
+        }
+
+        public void closeConnection()
+        {
+            if (connection.State == System.Data.ConnectionState.Open)
+            {
+                connectionNonDB.Close();
+            }
+        }
+
+        public MySqlConnection getConnectionNonDB()
+        {
+            return connectionNonDB;
         }
     }
 }

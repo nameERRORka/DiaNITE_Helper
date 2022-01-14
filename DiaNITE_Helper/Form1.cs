@@ -13,7 +13,7 @@ namespace DiaNITE_Helper
         //264; 12 POSITION GROUPBOX
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-        private static extern IntPtr CreateRoundRectRgn (int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
+        private static extern IntPtr CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
         private Point mouseOffset;
         private bool isMouseDown = false;
 
@@ -45,13 +45,26 @@ namespace DiaNITE_Helper
 
             _db_Main db = new _db_Main();
             DataTable table = new DataTable();
-
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand command = new MySqlCommand("SELECT * FROM _tb_stuff", db.getConnection());
+            MySqlCommand createDataBase = new MySqlCommand("CREATE DATABASE IF NOT EXISTS `_db_dianite`;", db.getConnectionNonDB());
+            db.openConnectionNonDB();
+            if (createDataBase.ExecuteNonQuery() == 1)
+            {
+            }
+            else
+            {
+            }
+            db.closeConnectionNonDB();
+
+            MySqlCommand createDataTable = new MySqlCommand("CREATE TABLE IF NOT EXISTS `_db_dianite`.`_tb_stuff` ( `nameStuff` VARCHAR(10000) NOT NULL , `addStuff` INT(50) NOT NULL , `subStuff` INT(50) NOT NULL , `sumStuff` INT(50) NOT NULL ) ENGINE = InnoDB;", db.getConnection());
             db.openConnection();
-
-
+            if (createDataTable.ExecuteNonQuery() == 1)
+            {
+            }
+            else
+            {
+            }
             db.closeConnection();
         }
 
@@ -203,43 +216,49 @@ namespace DiaNITE_Helper
                     }
                 }
             }
-            db.closeConnection();     
+            db.closeConnection();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _db_Main db = new _db_Main();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand("INSERT INTO _tb_stuff (nameStuff,addStuff,subStuff,sumStuff) VALUES (@insNameST,@addSt,@subSt,@sumSt);", db.getConnection());
-            
-            int addST = Convert.ToInt32(_tb_addStuff.Text);
-            int subST = Convert.ToInt32(_tb_subStuff.Text);
-
-            command.Parameters.Add("@insNameST", MySqlDbType.VarChar).Value = _tb_nameStuff.Text;
-            command.Parameters.Add("@addSt", MySqlDbType.Int32).Value = addST;
-            command.Parameters.Add("@subSt", MySqlDbType.Int32).Value = subST;
-            command.Parameters.Add("@sumSt", MySqlDbType.Int32).Value = addST - subST;
-
-            db.openConnection();
-
-            if (_tb_addStuff.Text != "" && _tb_nameStuff.Text != "" && _tb_subStuff.Text != "")
+            if (_tb_addStuff.Text != "" && _tb_subStuff.Text != "")
             {
-                if (command.ExecuteNonQuery() == 1)
+                _db_Main db = new _db_Main();
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+                MySqlCommand command = new MySqlCommand("INSERT INTO _tb_stuff (nameStuff,addStuff,subStuff,sumStuff) VALUES (@insNameST,@addSt,@subSt,@sumSt);", db.getConnection());
+
+                int addST = Convert.ToInt32(_tb_addStuff.Text);
+                int subST = Convert.ToInt32(_tb_subStuff.Text);
+
+                command.Parameters.Add("@insNameST", MySqlDbType.VarChar).Value = _tb_nameStuff.Text;
+                command.Parameters.Add("@addSt", MySqlDbType.Int32).Value = addST;
+                command.Parameters.Add("@subSt", MySqlDbType.Int32).Value = subST;
+                command.Parameters.Add("@sumSt", MySqlDbType.Int32).Value = addST - subST;
+
+                db.openConnection();
+
+                if (_tb_addStuff.Text != "" && _tb_nameStuff.Text != "" && _tb_subStuff.Text != "")
                 {
-                    MessageBox.Show("Товар добавлен успешно!");
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Товар добавлен успешно!");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Товар не был добавлен!!!");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Товар не был добавлен!!!");
+                    MessageBox.Show("Укажите корректные данные!");
                 }
-            }
-            else {
-                MessageBox.Show("Укажите корректные данные!");
+
+                db.closeConnection();
             }
 
-            db.closeConnection();
+            else { MessageBox.Show("Проверьте правильность введенных данных!"); }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -252,59 +271,68 @@ namespace DiaNITE_Helper
             readSub.Parameters.Add("@nameST1", MySqlDbType.VarChar).Value = _cb_nameStuff_subGB.Text;
 
             db.openConnection();
-            using (var reader = readSub.ExecuteReader())
-            {
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        subAddExport = reader.GetInt32("addStuff");
-                        subSubExport = reader.GetInt32("subStuff");
-                        subAddMath = Convert.ToInt32(_tb_subGB_sub.Text) + subSubExport;
-
-                        subItogExport = subAddExport - subAddMath;
-
-                    }
-                }
-            }
-            db.closeConnection();
-
-            MySqlCommand command = new MySqlCommand("UPDATE _tb_stuff SET subStuff = @subST WHERE nameStuff = @nameST1", db.getConnection());
-            command.Parameters.Add("@subST", MySqlDbType.Int32).Value = subAddMath;
-            command.Parameters.Add("@nameST1", MySqlDbType.VarChar).Value = _cb_nameStuff_subGB.Text;
-            db.openConnection();
             if (_tb_subGB_sub.Text != "")
             {
-                if (command.ExecuteNonQuery() == 1)
+                using (var reader = readSub.ExecuteReader())
                 {
-                    MessageBox.Show("Убытки внесены успешно!");
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            subAddExport = reader.GetInt32("addStuff");
+                            subSubExport = reader.GetInt32("subStuff");
+
+                            subAddMath = Convert.ToInt32(_tb_subGB_sub.Text) + subSubExport;
+
+                            subItogExport = subAddExport - subAddMath;
+
+                        }
+                    }
                 }
-                else { MessageBox.Show("Убытки не были внесены!"); }
+
+                db.closeConnection();
+
+                MySqlCommand command = new MySqlCommand("UPDATE _tb_stuff SET subStuff = @subST WHERE nameStuff = @nameST1", db.getConnection());
+                command.Parameters.Add("@subST", MySqlDbType.Int32).Value = subAddMath;
+                command.Parameters.Add("@nameST1", MySqlDbType.VarChar).Value = _cb_nameStuff_subGB.Text;
+                db.openConnection();
+                if (_tb_subGB_sub.Text != "")
+                {
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Убытки внесены успешно!");
+                    }
+                    else { MessageBox.Show("Убытки не были внесены!"); }
+                }
+                else
+                {
+                    MessageBox.Show("Введите корректные данные");
+                }
+                db.closeConnection();
+
+
+                MySqlCommand comUPD2 = new MySqlCommand("UPDATE _tb_stuff SET sumStuff = @sumST WHERE nameStuff = @nameST3", db.getConnection());
+                comUPD2.Parameters.Add("@sumST", MySqlDbType.Int32).Value = subItogExport;
+                comUPD2.Parameters.Add("@nameST3", MySqlDbType.VarChar).Value = _cb_nameStuff_subGB.Text;
+                db.openConnection();
+                if (_tb_addGB.Text != "")
+                {
+                    if (comUPD2.ExecuteNonQuery() == 1)
+                    {
+
+                    }
+                    else { }
+                }
+                else
+                {
+
+                }
+                db.closeConnection();
             }
             else
             {
-                MessageBox.Show("Введите корректные данные");
+                MessageBox.Show("Внесите число убытка!!!");
             }
-            db.closeConnection();
-
-
-            MySqlCommand comUPD2 = new MySqlCommand("UPDATE _tb_stuff SET sumStuff = @sumST WHERE nameStuff = @nameST3", db.getConnection());
-            comUPD2.Parameters.Add("@sumST", MySqlDbType.Int32).Value = subItogExport;
-            comUPD2.Parameters.Add("@nameST3", MySqlDbType.VarChar).Value = _cb_nameStuff_subGB.Text;
-            db.openConnection();
-            if (_tb_addGB.Text != "")
-            {
-                if (comUPD2.ExecuteNonQuery() == 1)
-                {
-
-                }
-                else { }
-            }
-            else
-            {
-
-            }
-            db.closeConnection();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -317,57 +345,63 @@ namespace DiaNITE_Helper
             readSub.Parameters.Add("@nameST1", MySqlDbType.VarChar).Value = _cb_addGb.Text;
 
             db.openConnection();
-            using (var reader = readSub.ExecuteReader())
+            if (_tb_addGB.Text != "")
             {
-                if (reader.HasRows)
+                using (var reader = readSub.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        summAddExport = reader.GetInt32("addStuff");
-                        summSubExport = reader.GetInt32("subStuff");
-                        summAddMath = Convert.ToInt32(_tb_addGB.Text) + summAddExport;
+                        while (reader.Read())
+                        {
+                            summAddExport = reader.GetInt32("addStuff");
+                            summSubExport = reader.GetInt32("subStuff");
+                            summAddMath = Convert.ToInt32(_tb_addGB.Text) + summAddExport;
 
-                        summItogExport = summAddMath - summSubExport; 
+                            summItogExport = summAddMath - summSubExport;
+                        }
                     }
                 }
-            }
-            db.closeConnection();
+                db.closeConnection();
 
-            MySqlCommand comUPD = new MySqlCommand("UPDATE _tb_stuff SET addStuff = @addST WHERE nameStuff = @nameST2", db.getConnection());
-            comUPD.Parameters.Add("@addST", MySqlDbType.Int32).Value = summAddMath;
-            comUPD.Parameters.Add("@nameST2", MySqlDbType.VarChar).Value = _cb_addGb.Text;
-            db.openConnection();
-            if (_tb_addGB.Text != "")
-            {
-                if (comUPD.ExecuteNonQuery() == 1)
+                MySqlCommand comUPD = new MySqlCommand("UPDATE _tb_stuff SET addStuff = @addST WHERE nameStuff = @nameST2", db.getConnection());
+                comUPD.Parameters.Add("@addST", MySqlDbType.Int32).Value = summAddMath;
+                comUPD.Parameters.Add("@nameST2", MySqlDbType.VarChar).Value = _cb_addGb.Text;
+                db.openConnection();
+                if (_tb_addGB.Text != "")
                 {
-                    MessageBox.Show("Убытки внесены успешно!");
+                    if (comUPD.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Убытки внесены успешно!");
+                    }
+                    else { MessageBox.Show("Убытки не были внесены!"); }
                 }
-                else { MessageBox.Show("Убытки не были внесены!"); }
-            }
-            else
-            {
-                MessageBox.Show("Введите корректные данные");
-            }
-            db.closeConnection();
+                else
+                {
+                    MessageBox.Show("Введите корректные данные");
+                }
+                db.closeConnection();
 
-            MySqlCommand comUPD2 = new MySqlCommand("UPDATE _tb_stuff SET sumStuff = @sumST WHERE nameStuff = @nameST3", db.getConnection());
-            comUPD2.Parameters.Add("@sumST", MySqlDbType.Int32).Value = summItogExport;
-            comUPD2.Parameters.Add("@nameST3", MySqlDbType.VarChar).Value = _cb_addGb.Text;
-            db.openConnection();
-            if (_tb_addGB.Text != "")
-            {
+                MySqlCommand comUPD2 = new MySqlCommand("UPDATE _tb_stuff SET sumStuff = @sumST WHERE nameStuff = @nameST3", db.getConnection());
+                comUPD2.Parameters.Add("@sumST", MySqlDbType.Int32).Value = summItogExport;
+                comUPD2.Parameters.Add("@nameST3", MySqlDbType.VarChar).Value = _cb_addGb.Text;
+                db.openConnection();
+
                 if (comUPD2.ExecuteNonQuery() == 1)
                 {
-                   
+
                 }
-                else {  }
+                else { }
             }
             else
             {
-                
+                MessageBox.Show("Внесите число прихода!!!");
             }
             db.closeConnection();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Создатель: FCORETOP\nСпецпроект для парикмахерской 'Дианита'\nОт всего сердца и с любовью<3");
         }
     }
 }
